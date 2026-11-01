@@ -1,0 +1,14 @@
+# Merge into the primary's shared ~/openpak/deploy/traefik/dynamic.yml. The gateway forwards
+# Live service 21 here.
+http:
+  routers:
+    x360-xbos-web:
+      entryPoints: [web]
+      rule: Path(`/xbos/GetRevocationList.ashx`)
+      priority: 40
+      service: x360-xbos-http
+  services:
+    x360-xbos-http:
+      loadBalancer:
+        servers:
+        - url: http://openpak-x360-xbos:10021

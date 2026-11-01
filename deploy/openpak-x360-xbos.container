@@ -1,0 +1,23 @@
+# PRIMARY host. OpenPak Xbox 360 licensing server (x360-xbos): Live service 21 requests the security
+# gateway tunnels to the primary's Traefik. Identity headers are trusted only with the gateway key.
+[Unit]
+Description=OpenPak Xbox 360 licensing server (x360-xbos)
+
+[Container]
+ContainerName=openpak-x360-xbos
+Image=ghcr.io/openpak/x360-xbos:latest
+AutoUpdate=registry
+Network=openpak.network
+IP=10.89.2.208
+Environment=X360_XBOS_ADDR=:10021
+EnvironmentFile=%h/openpak/deploy/x360-gateway-key.env
+ReadOnly=true
+DropCapability=ALL
+NoNewPrivileges=true
+UserNS=keep-id:uid=100,gid=101
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
